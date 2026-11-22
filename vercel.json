@@ -1,0 +1,10 @@
+
+{
+  "outputDirectory": "dist/e-commerce",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
