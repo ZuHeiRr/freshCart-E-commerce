@@ -51,7 +51,6 @@ export class AddressesComponent implements OnInit {
         this.loading.set(false);
       },
       error: (error) => {
-        console.log('Get addresses error:', error);
 
         this.loading.set(false);
       },
@@ -70,7 +69,6 @@ export class AddressesComponent implements OnInit {
       .addAddress(this.addressForm.value as any)
       .subscribe({
         next: (response) => {
-          console.log('Add address response:', response);
 
           this.toastr.success(this.languageService.translate('Address added successfully'));
 
@@ -81,7 +79,6 @@ export class AddressesComponent implements OnInit {
           this.getAddresses();
         },
         error: (error) => {
-          console.log('Add address error:', error);
 
           this.toastr.error(this.languageService.translate('Failed to add address'));
           this.submitting.set(false);
@@ -118,7 +115,7 @@ export class AddressesComponent implements OnInit {
           this.getAddresses();
         },
         error: (error) => {
-          console.log('Delete address error:', error);
+         
 
           Swal.fire({
             title: this.languageService.translate('Error!'),

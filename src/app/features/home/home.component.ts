@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
   getAllCategories() {
     this.categoriesService.getAllCategories().subscribe({
       next: (response) => {
-        console.log(response);
         this.categoriesList.set(response.data);
       },
       error: (error) => {
@@ -49,7 +48,6 @@ export class HomeComponent implements OnInit {
   getAllProducts() {
     this.productsService.getAllProducts().subscribe({
       next: (response) => {
-        console.log(response);
         this.productsList.set(response.data);
       },
       error: (error) => {

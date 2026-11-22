@@ -44,7 +44,6 @@ export class ProductDetailsComponent implements OnInit {
   getSingleProduct() {
     this.productsService.getSingleProduct(this.productId()).subscribe({
       next: (response) => {
-        console.log(response);
         
         this.singleProduct.set(response.data);
         this.mainImage.set(response.data.imageCover);
@@ -86,7 +85,6 @@ export class ProductDetailsComponent implements OnInit {
     
     this.cartService.addToCart({"productId":id}).subscribe({
       next:(res)=>{
-        console.log(res);
           this.toastr.success(res.message, 'Fresh Cart - Cart');
           this.cartService.cartCounter.set(res.numOfCartItems)
         

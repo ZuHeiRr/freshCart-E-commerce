@@ -42,7 +42,6 @@ export class ShopComponent implements OnInit {
   getAllProducts(pageNumber:number=1) {
     this.productsService.getAllProducts(pageNumber,this.brandId,this.categoryId, this.keyword).subscribe({
       next: (response) => {
-        console.log(response);
         this.allProducts.set(response.data);
         this.pageSize.set(response.metadata.limit)
         this.currentPage.set(response.metadata.currentPage)

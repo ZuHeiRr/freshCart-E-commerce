@@ -59,7 +59,6 @@ toggleWishlist(productId: string): void {
 
     this.cartService.addToCart({ productId: id }).subscribe({
       next: (res) => {
-        console.log(res);
 
         this.toastr.success(res.message, 'Fresh Cart - Cart');
 

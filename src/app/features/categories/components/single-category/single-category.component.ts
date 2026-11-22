@@ -31,7 +31,6 @@ export class SingleCategoryComponent implements OnInit {
   getAllSubcategoriesOnCategory() {
     this.categoriesService.getAllSubcategoriesOnCategory(this.id()).subscribe({
       next: (response) => {
-        console.log(response);
         this.subcategoriesList.set(response.data);
       },
       error: (error) => {
@@ -42,7 +41,6 @@ export class SingleCategoryComponent implements OnInit {
   getSingleCategory() {
     this.categoriesService.getSingleCategory(this.id()).subscribe({
       next: (response) => {
-        console.log(response);
         this.singleCategory.set(response.data);
       },
       error: (error) => {

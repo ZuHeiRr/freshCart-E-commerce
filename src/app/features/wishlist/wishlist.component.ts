@@ -19,7 +19,6 @@ export class WishlistComponent implements OnInit {
   getLoggedUserWishlist() {
     this.wishlistService.getLoggedUserWishlist().subscribe({
       next: (res) => {
-        console.log(res);
       },
       error: (err) => {
         console.log(err);
@@ -30,7 +29,6 @@ export class WishlistComponent implements OnInit {
   removeFromWishlist(id: string) {
     this.wishlistService.removeFromWishlist(id).subscribe({
       next: (res) => {
-        console.log(res);
       },
       error: (err) => {
         console.log(err);

@@ -23,7 +23,6 @@ cartData : WritableSignal<Icart>=signal({} as Icart)
   getLoggedUserCart(){
      this.cartService.getLoggedUserCart().subscribe({
       next: (res) => {
-       console.log(res);
        this.cartData.set(res.data)
        
       },
@@ -36,7 +35,6 @@ cartData : WritableSignal<Icart>=signal({} as Icart)
   removeProduct(id:string){
      this.cartService.removeProduct(id).subscribe({
       next: (res) => {
-       console.log(res);
        this.cartData.set(res.data)
                  this.cartService.cartCounter.set(res.numOfCartItems)
 
@@ -51,7 +49,7 @@ cartData : WritableSignal<Icart>=signal({} as Icart)
   updateItemQuntity(id:string,data:number){
      this.cartService.updateItemQuntity(id,{count:data}).subscribe({
       next: (res) => {
-       console.log(res);
+      
        this.cartData.set(res.data)
                  this.cartService.cartCounter.set(res.numOfCartItems)
 
@@ -66,7 +64,6 @@ cartData : WritableSignal<Icart>=signal({} as Icart)
   clearLoggedUserCart(){
      this.cartService.clearUserCart().subscribe({
       next: (res) => {
-       console.log(res);
        this.cartData.set(res.data)
                  this.cartService.cartCounter.set(res.numOfCartItems)
 

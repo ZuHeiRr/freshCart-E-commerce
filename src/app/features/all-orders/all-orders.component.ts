@@ -43,11 +43,9 @@ getUserOrders(){
 this.ordersService.getLoggedUserOrder(this.userId()).subscribe({
   next:(res)=>{
     this.userOrdersList.set(res)
-    console.log(this.userOrdersList());
     
   },
   error:(err)=>{
-    console.log(err);
     
   }
 })

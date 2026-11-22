@@ -43,7 +43,6 @@ export class CheckoutComponent implements OnInit {
    getLoggedUserCart(){
      this.cartService.getLoggedUserCart().subscribe({
       next: (res) => {
-       console.log(res);
        this.cartData.set(res.data)
        
       },
@@ -72,7 +71,6 @@ export class CheckoutComponent implements OnInit {
     };
     this.cartService.creatrCashOrder(this.cartData()._id, payLoad).subscribe({
       next: (res) => {
-        console.log(res);
         this.router.navigate(['/allOrders'])
       },
       error: (err) => {
@@ -88,7 +86,6 @@ export class CheckoutComponent implements OnInit {
     };
     this.cartService.creatrVisaOrder(this.cartData()._id, payLoad).subscribe({
       next: (res) => {
-        console.log(res);
         window.open(res.session.url, '_blank');
       },
       error: (err) => {
