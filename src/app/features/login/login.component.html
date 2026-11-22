@@ -1,0 +1,272 @@
+<section class="min-h-[calc(100vh-80px)] bg-gray-50 flex items-center py-10 px-4">
+  <div
+    class="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center"
+  >
+    <!-- Welcome Section -->
+    <div class="hidden lg:block">
+      <div class="text-center space-y-6 shadow-2xl rounded-3xl p-10 bg-white border border-gray-100">
+        <img
+          class="w-full h-96 object-cover rounded-2xl shadow-lg"
+          src="https://storage.googleapis.com/uxpilot-auth.appspot.com/2e5810ff3e-e750761ebcd4ae5907db.png"
+          alt="fresh vegetables and fruits shopping cart illustration, modern clean style, green theme"
+        />
+        <div class="space-y-4">
+          <h2 class="text-3xl font-bold text-gray-800">
+            FreshCart - Your One-Stop Shop for Fresh Products
+          </h2>
+          <p class="text-lg text-gray-600">
+            Join thousands of happy customers who trust FreshCart for their daily grocery needs
+          </p>
+          <div class="flex items-center justify-center space-x-8 text-sm text-gray-500">
+            <div class="flex items-center">
+              <svg
+                data-prefix="fas"
+                data-icon="truck"
+                class="svg-inline--fa fa-truck size-4 text-primary-600 mr-2"
+                role="img"
+                viewBox="0 0 576 512"
+                aria-hidden="true"
+              >
+                <path
+                  fill="currentColor"
+                  d="M0 96C0 60.7 28.7 32 64 32l288 0c35.3 0 64 28.7 64 64l0 32 50.7 0c17 0 33.3 6.7 45.3 18.7L557.3 192c12 12 18.7 28.3 18.7 45.3L576 384c0 35.3-28.7 64-64 64l-3.3 0c-10.4 36.9-44.4 64-84.7 64s-74.2-27.1-84.7-64l-102.6 0c-10.4 36.9-44.4 64-84.7 64s-74.2-27.1-84.7-64L64 448c-35.3 0-64-28.7-64-64L0 96zM512 288l0-50.7-45.3-45.3-50.7 0 0 96 96 0zM192 424a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm232 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"
+                ></path></svg
+              >{{ 'Free Delivery' | translate }}
+            </div>
+            <div class="flex items-center">
+              <svg
+                data-prefix="fas"
+                data-icon="shield-halved"
+                class="svg-inline--fa fa-shield-halved size-4 text-primary-600 mr-2"
+                role="img"
+                viewBox="0 0 512 512"
+                aria-hidden="true"
+              >
+                <path
+                  fill="currentColor"
+                  d="M256 0c4.6 0 9.2 1 13.4 2.9L457.8 82.8c22 9.3 38.4 31 38.3 57.2-.5 99.2-41.3 280.7-213.6 363.2-16.7 8-36.1 8-52.8 0-172.4-82.5-213.1-264-213.6-363.2-.1-26.2 16.3-47.9 38.3-57.2L242.7 2.9C246.9 1 251.4 0 256 0zm0 66.8l0 378.1c138-66.8 175.1-214.8 176-303.4l-176-74.6 0 0z"
+                ></path></svg
+              >{{ 'Secure Payment' | translate }}
+            </div>
+            <div class="flex items-center">
+              <svg
+                data-prefix="fas"
+                data-icon="clock"
+                class="svg-inline--fa fa-clock size-4 text-primary-600 mr-2"
+                role="img"
+                viewBox="0 0 512 512"
+                aria-hidden="true"
+              >
+                <path
+                  fill="currentColor"
+                  d="M256 0a256 256 0 1 1 0 512 256 256 0 1 1 0-512zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+                ></path></svg
+              >{{ '24/7 Support' | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="w-full max-w-lg mx-auto">
+      <div
+        class="bg-white rounded-3xl shadow-lg shadow-gray-200/70 border border-gray-100 p-7 sm:p-10"
+      >
+        <!-- Mobile Logo -->
+        <div class="lg:hidden text-center mb-8">
+          <span class="text-3xl font-extrabold text-primary-600">
+            {{ 'Fresh' | translate }}<span class="text-gray-800">{{ 'Cart' | translate }}</span>
+          </span>
+        </div>
+
+        <div class="mb-8 flex flex-col items-center">
+          <div
+            class="w-14 h-14 rounded-2xl bg-primary-50 text-primary-600 flex items-center  justify-center text-2xl mb-5"
+          >
+           <i class="fa-solid fa-person-walking-arrow-right fa-buzz "></i>   
+                 </div>
+
+          <h1 class="text-3xl font-bold text-gray-900">{{ 'Welcome back!' | translate }}</h1>
+
+          <p class="text-gray-500 mt-2">{{ 'Sign in to your account and continue shopping.' | translate }}</p>
+        </div>
+        <div class="space-y-3 mb-6">
+          <button
+            type="button"
+            class="w-full flex items-center justify-center gap-3 py-3 px-4 border-2 border-gray-200 rounded-xl hover:border-primary-300 hover:bg-primary-50 transition-all duration-200"
+          >
+            <svg
+              data-prefix="fab"
+              data-icon="google"
+              class="svg-inline--fa fa-google size-5 text-red-500 text-lg"
+              role="img"
+              viewBox="0 0 512 512"
+              aria-hidden="true"
+            >
+              <path
+                fill="currentColor"
+                d="M500 261.8C500 403.3 403.1 504 260 504 122.8 504 12 393.2 12 256S122.8 8 260 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9c-88.3-85.2-252.5-21.2-252.5 118.2 0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9l-140.8 0 0-85.3 236.1 0c2.3 12.7 3.9 24.9 3.9 41.4z"
+              ></path></svg
+            ><span class="font-medium text-gray-700">{{ 'Continue with Google' | translate }}</span></button
+          ><button
+            type="button"
+            class="w-full flex items-center justify-center gap-3 py-3 px-4 border-2 border-gray-200 rounded-xl hover:border-primary-300 hover:bg-primary-50 transition-all duration-200"
+          >
+            <svg
+              data-prefix="fab"
+              data-icon="facebook"
+              class="svg-inline--fa fa-facebook size-5 text-blue-600 text-lg"
+              role="img"
+              viewBox="0 0 512 512"
+              aria-hidden="true"
+            >
+              <path
+                fill="currentColor"
+                d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 504.5l0-170.3-52.8 0 0-78.2 52.8 0 0-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4l0 70.8c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2l0 27.8 83.6 0-14.4 78.2-69.3 0 0 175.9C413.8 494.8 512 386.9 512 256z"
+              ></path></svg
+            ><span class="font-medium text-gray-700">{{ 'Continue with Facebook' | translate }}</span>
+          </button>
+        </div>
+
+        <!-- Server Error -->
+        @if (errorMessage()) {
+          <div
+            class="mb-5 flex items-start gap-3 p-4 rounded-xl bg-red-50 border border-red-100 text-red-600"
+          >
+            <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+            <p class="text-sm">{{ errorMessage() }}</p>
+          </div>
+        }
+
+        <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="space-y-5">
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+              {{ 'Email Address' | translate }}
+            </label>
+
+            <div class="relative">
+              <i
+                class="fa-regular fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+              ></i>
+
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                placeholder="example@email.com"
+                autocomplete="email"
+                class="w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 outline-none transition-all focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10"
+                [class.border-red-400]="email?.invalid && email?.touched"
+              />
+            </div>
+
+            @if (email?.touched && email?.hasError('required')) {
+              <p class="text-red-500 text-xs mt-2">{{ 'Email is required.' | translate }}</p>
+            }
+
+            @if (email?.touched && email?.hasError('email')) {
+              <p class="text-red-500 text-xs mt-2">{{ 'Please enter a valid email address.' | translate }}</p>
+            }
+          </div>
+
+          <!-- Password -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label for="password" class="block text-sm font-semibold text-gray-700">
+                {{ 'Password' | translate }}
+              </label>
+
+              <a
+                routerLink="/forget-pass"
+                class="text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
+              >
+                {{ 'Forgot password?' | translate }}
+              </a>
+            </div>
+
+            <div class="relative">
+              <i
+                class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+              ></i>
+
+              <input
+                id="password"
+                [type]="showPassword() ? 'text' : 'password'"
+                formControlName="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                class="w-full pl-11 pr-12 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 outline-none transition-all focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10"
+                [class.border-red-400]="password?.invalid && password?.touched"
+              />
+
+              <button
+                type="button"
+                (click)="togglePassword()"
+                class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary-600 transition-colors"
+                [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+              >
+                <i [class]="showPassword() ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+              </button>
+            </div>
+
+            @if (password?.touched && password?.hasError('required')) {
+              <p class="text-red-500 text-xs mt-2">{{ 'Password is required.' | translate }}</p>
+            }
+
+            @if (password?.touched && password?.hasError('minlength')) {
+              <p class="text-red-500 text-xs mt-2">{{ 'Password must be at least 6 characters.' | translate }}</p>
+            }
+          </div>
+
+          <!-- Remember Me -->
+          <div class="flex items-center gap-2">
+            <input
+              id="rememberMe"
+              type="checkbox"
+              formControlName="rememberMe"
+              class="w-4 h-4 accent-primary-600 rounded cursor-pointer"
+            />
+            <label for="rememberMe" class="text-sm text-gray-600 cursor-pointer">
+              {{ 'Keep me signed in' | translate }}
+            </label>
+          </div>
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            [disabled]="isLoading()"
+            class="w-full flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-primary-600/20 transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+          >
+            @if (isLoading()) {
+              <i class="fa-solid fa-spinner fa-spin"></i>
+              <span>{{ 'Signing in...' | translate }}</span>
+            } @else {
+              <span>{{ 'Sign In' | translate }}</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            }
+          </button>
+        </form>
+
+        <!-- Register Link -->
+        <div class="text-center mt-8 pt-6 border-t border-gray-100">
+          <p class="text-sm text-gray-500">
+            {{ 'Don\'t have an account?' | translate }}
+            <a
+              routerLink="/register"
+              class="font-bold text-primary-600 hover:text-primary-700 ms-1"
+            >
+              {{ 'Create account' | translate }}
+            </a>
+          </p>
+        </div>
+
+        <div class="flex items-center justify-center gap-2 mt-6 text-xs text-gray-400">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>{{ 'Your account is protected and secure' | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

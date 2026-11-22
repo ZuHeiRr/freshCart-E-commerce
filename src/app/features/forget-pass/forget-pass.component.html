@@ -1,0 +1,365 @@
+
+<section class="min-h-[calc(100vh-80px)] bg-gray-50 flex items-center justify-center py-12 px-4">
+  <div class="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+
+    <!-- Welcome Side -->
+    <div class="hidden lg:block">
+      <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-700 via-primary-600 to-primary-500 p-10 min-h-[480px] text-white shadow-xl">
+        <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-white/10"></div>
+        <div class="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-white/10"></div>
+
+        <div class="relative z-10">
+          <h2 class="text-3xl font-extrabold">
+            {{ 'Fresh' | translate }}<span class="text-green-200">{{ 'Cart' | translate }}</span>
+          </h2>
+
+          <div class="mt-20">
+            <div class="w-16 h-16 rounded-2xl bg-white/15 flex items-center justify-center text-3xl">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+
+            <h1 class="text-4xl font-bold mt-7 leading-tight">
+              {{ 'Secure your account with ease.' | translate }}
+            </h1>
+
+            <p class="text-white/80 mt-5 leading-8">
+              {{ 'Follow a few simple steps to recover your account and get back to your favorite products.' | translate }}
+            </p>
+          </div>
+
+          <div class="mt-16 flex items-center gap-3 text-sm text-white/80">
+            <i class="fa-solid fa-lock text-green-200"></i>
+            {{ 'Your security is our priority' | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forms Side -->
+    <div class="w-full max-w-lg mx-auto">
+      <div class="bg-white rounded-3xl shadow-lg shadow-gray-200/70 border border-gray-100 p-7 sm:p-10">
+
+        <!-- Logo -->
+        <div class="lg:hidden text-center mb-8">
+          <span class="text-3xl font-extrabold text-primary-600">
+            {{ 'Fresh' | translate }}<span class="text-gray-800">{{ 'Cart' | translate }}</span>
+          </span>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="flex items-center justify-center gap-3 mb-9">
+          <div
+            class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
+            [class.bg-primary-600]="currentStep() === 'email'"
+            [class.text-white]="currentStep() === 'email'"
+            [class.bg-primary-100]="currentStep() !== 'email'"
+            [class.text-primary-700]="currentStep() !== 'email'"
+          >
+            1
+          </div>
+
+          <div class="w-12 h-1 rounded-full"
+            [class.bg-primary-600]="currentStep() !== 'email'"
+            [class.bg-gray-200]="currentStep() === 'email'">
+          </div>
+
+          <div
+            class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
+            [class.bg-primary-600]="currentStep() === 'otp'"
+            [class.text-white]="currentStep() === 'otp'"
+            [class.bg-primary-100]="currentStep() !== 'otp'"
+            [class.text-primary-700]="currentStep() !== 'otp'"
+          >
+            2
+          </div>
+
+          <div class="w-12 h-1 rounded-full"
+            [class.bg-primary-600]="currentStep() === 'newPassword'"
+            [class.bg-gray-200]="currentStep() !== 'newPassword'">
+          </div>
+
+          <div
+            class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
+            [class.bg-primary-600]="currentStep() === 'newPassword'"
+            [class.text-white]="currentStep() === 'newPassword'"
+            [class.bg-primary-100]="currentStep() !== 'newPassword'"
+            [class.text-primary-700]="currentStep() !== 'newPassword'"
+          >
+            3
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        @if (errorMessage()) {
+          <div class="mb-5 flex items-start gap-3 p-4 rounded-xl bg-red-50 border border-red-100 text-red-600">
+            <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+            <p class="text-sm">{{ errorMessage() }}</p>
+          </div>
+        }
+
+        <!-- Success Message -->
+        @if (successMessage()) {
+          <div class="mb-5 flex items-start gap-3 p-4 rounded-xl bg-green-50 border border-green-100 text-green-700">
+            <i class="fa-solid fa-circle-check mt-0.5"></i>
+            <p class="text-sm">{{ successMessage() }}</p>
+          </div>
+        }
+
+        <!-- STEP 1: EMAIL -->
+        @if (currentStep() === 'email') {
+          <div class="text-center mb-8">
+            <div class="w-16 h-16 rounded-2xl bg-primary-50 text-primary-600 flex items-center justify-center text-2xl mx-auto mb-5">
+              <i class="fa-regular fa-envelope"></i>
+            </div>
+
+            <h1 class="text-2xl font-bold text-gray-900">
+              {{ 'Forgot Password?' | translate }}
+            </h1>
+
+            <p class="text-gray-500 text-sm mt-2 leading-6">
+              {{ 'Don\'t worry! Enter your email address and we\'ll send you a verification code.' | translate }}
+            </p>
+          </div>
+
+          <form [formGroup]="emailForm" (ngSubmit)="submitEmail()" class="space-y-5">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                {{ 'Email Address' | translate }}
+              </label>
+
+              <div class="relative">
+                <i class="fa-regular fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+
+                <input
+                  type="email"
+                  formControlName="email"
+                  placeholder="example@email.com"
+                  autocomplete="email"
+                  class="w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 outline-none transition-all focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10"
+                  [class.border-red-400]="email?.invalid && email?.touched"
+                />
+              </div>
+
+              @if (email?.touched && email?.hasError('required')) {
+                <p class="text-red-500 text-xs mt-2">{{ 'Email is required.' | translate }}</p>
+              }
+
+              @if (email?.touched && email?.hasError('email')) {
+                <p class="text-red-500 text-xs mt-2">{{ 'Enter a valid email address.' | translate }}</p>
+              }
+            </div>
+
+            <button
+              type="submit"
+              [disabled]="isLoading()"
+              class="w-full flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3.5 rounded-xl transition-all disabled:opacity-60"
+            >
+              @if (isLoading()) {
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                {{ 'Sending...' | translate }}
+              } @else {
+                {{ 'Send Verification Code' | translate }}
+                <i class="fa-solid fa-arrow-right"></i>
+              }
+            </button>
+          </form>
+        }
+
+        <!-- STEP 2: OTP -->
+        @if (currentStep() === 'otp') {
+          <div class="text-center mb-8">
+            <div class="w-16 h-16 rounded-2xl bg-primary-50 text-primary-600 flex items-center justify-center text-2xl mx-auto mb-5">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+
+            <h1 class="text-2xl font-bold text-gray-900">
+              {{ 'Verify Your Email' | translate }}
+            </h1>
+
+            <p class="text-gray-500 text-sm mt-2 leading-6">
+              {{ 'We\'ve sent a 6-digit verification code to' | translate }}
+              <span class="font-semibold text-gray-700">{{ userEmail() }}</span>
+            </p>
+          </div>
+
+          <form [formGroup]="otpForm" (ngSubmit)="submitOtp()" class="space-y-5">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                {{ 'Verification Code' | translate }}
+              </label>
+
+              <input
+                type="text"
+                formControlName="resetCode"
+                placeholder="Enter 6-digit code"
+                maxlength="6"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                class="w-full text-center tracking-[0.5em] text-xl font-bold py-4 rounded-xl border border-gray-200 bg-gray-50/50 outline-none focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10"
+                [class.border-red-400]="resetCode?.invalid && resetCode?.touched"
+              />
+
+              @if (resetCode?.touched && resetCode?.hasError('required')) {
+                <p class="text-red-500 text-xs mt-2">{{ 'Verification code is required.' | translate }}</p>
+              }
+
+              @if (resetCode?.touched && resetCode?.hasError('pattern')) {
+                <p class="text-red-500 text-xs mt-2">{{ 'Code must contain exactly 6 digits.' | translate }}</p>
+              }
+            </div>
+
+            <button
+              type="submit"
+              [disabled]="isLoading()"
+              class="w-full flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3.5 rounded-xl transition-all disabled:opacity-60"
+            >
+              @if (isLoading()) {
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                {{ 'Verifying...' | translate }}
+              } @else {
+                {{ 'Verify Code' | translate }}
+                <i class="fa-solid fa-arrow-right"></i>
+              }
+            </button>
+
+            <button
+              type="button"
+              (click)="backToEmail()"
+              class="w-full text-sm font-semibold text-gray-500 hover:text-primary-600 transition-colors"
+            >
+              <i class="fa-solid fa-arrow-left me-2"></i>
+              {{ 'Change Email Address' | translate }}
+            </button>
+          </form>
+        }
+
+        <!-- STEP 3: NEW PASSWORD -->
+        @if (currentStep() === 'newPassword') {
+          <div class="text-center mb-8">
+            <div class="w-16 h-16 rounded-2xl bg-primary-50 text-primary-600 flex items-center justify-center text-2xl mx-auto mb-5">
+              <i class="fa-solid fa-lock"></i>
+            </div>
+
+            <h1 class="text-2xl font-bold text-gray-900">
+              {{ 'Create New Password' | translate }}
+            </h1>
+
+            <p class="text-gray-500 text-sm mt-2 leading-6">
+              {{ 'Choose a strong password to protect your account.' | translate }}
+            </p>
+          </div>
+
+          <form [formGroup]="newPasswordForm" (ngSubmit)="submitNewPassword()" class="space-y-5">
+
+            <!-- New Password -->
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                {{ 'New Password' | translate }}
+              </label>
+
+              <div class="relative">
+                <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+
+                <input
+                  [type]="showPassword() ? 'text' : 'password'"
+                  formControlName="newPassword"
+                  placeholder="Enter new password"
+                  autocomplete="new-password"
+                  class="w-full pl-11 pr-12 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 outline-none focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10"
+                  [class.border-red-400]="newPassword?.invalid && newPassword?.touched"
+                />
+
+                <button
+                  type="button"
+                  (click)="togglePassword()"
+                  class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary-600"
+                >
+                  <i [class]="showPassword() ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+                </button>
+              </div>
+
+              @if (newPassword?.touched && newPassword?.hasError('required')) {
+                <p class="text-red-500 text-xs mt-2">{{ 'Password is required.' | translate }}</p>
+              }
+
+              @if (newPassword?.touched && newPassword?.hasError('minlength')) {
+                <p class="text-red-500 text-xs mt-2">{{ 'Password must be at least 8 characters.' | translate }}</p>
+              }
+            </div>
+
+            <!-- Confirm Password -->
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                {{ 'Confirm New Password' | translate }}
+              </label>
+
+              <div class="relative">
+                <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+
+                <input
+                  [type]="showConfirmPassword() ? 'text' : 'password'"
+                  formControlName="confirmPassword"
+                  placeholder="Confirm new password"
+                  autocomplete="new-password"
+                  class="w-full pl-11 pr-12 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 outline-none focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10"
+                  [class.border-red-400]="confirmPassword?.invalid && confirmPassword?.touched"
+                />
+
+                <button
+                  type="button"
+                  (click)="toggleConfirmPassword()"
+                  class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary-600"
+                >
+                  <i [class]="showConfirmPassword() ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+                </button>
+              </div>
+
+              @if (confirmPassword?.touched && confirmPassword?.hasError('required')) {
+                <p class="text-red-500 text-xs mt-2">{{ 'Please confirm your password.' | translate }}</p>
+              }
+
+              @if (newPasswordForm.hasError('passwordMismatch') && confirmPassword?.touched) {
+                <p class="text-red-500 text-xs mt-2">{{ 'Passwords do not match.' | translate }}</p>
+              }
+            </div>
+
+            <button
+              type="submit"
+              [disabled]="isLoading()"
+              class="w-full flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3.5 rounded-xl transition-all disabled:opacity-60"
+            >
+              @if (isLoading()) {
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                {{ 'Resetting Password...' | translate }}
+              } @else {
+                {{ 'Reset Password' | translate }}
+                <i class="fa-solid fa-check"></i>
+              }
+            </button>
+
+            <button
+              type="button"
+              (click)="backToOtp()"
+              class="w-full text-sm font-semibold text-gray-500 hover:text-primary-600 transition-colors"
+            >
+              <i class="fa-solid fa-arrow-left me-2"></i>
+              {{ 'Back to Verification' | translate }}
+            </button>
+          </form>
+        }
+
+        <!-- Back to Login -->
+        <div class="text-center mt-8 pt-6 border-t border-gray-100">
+          <a
+            routerLink="/auth/login"
+            class="text-sm font-semibold text-gray-500 hover:text-primary-600 transition-colors"
+          >
+            <i class="fa-solid fa-arrow-left me-2"></i>
+            {{ 'Back to Login' | translate }}
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

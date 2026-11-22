@@ -1,0 +1,309 @@
+
+<section class="min-h-screen bg-gray-50 py-10">
+  <div class="container mx-auto px-4">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">{{ 'My Orders' | translate }}</h1>
+        <p class="text-gray-500 mt-2">
+          {{ 'Track and manage your orders' | translate }}
+        </p>
+      </div>
+
+      <a routerLink="/shop"
+        class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all">
+        <i class="fa-solid fa-bag-shopping mr-2"></i>
+        {{ 'Continue Shopping' | translate }}
+      </a>
+    </div>
+
+    <!-- Orders List -->
+    <div class="space-y-4">
+
+      @for (order of userOrdersList(); track order._id) {
+
+        <!-- Order Card -->
+        <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all">
+
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-5">
+
+            <!-- Order Info -->
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center text-xl shrink-0">
+                <i class="fa-solid fa-box"></i>
+              </div>
+
+              <div>
+                <h3 class="font-bold text-gray-900">
+                  Order #{{ order.id }}
+                </h3>
+                <p class="text-sm text-gray-500 mt-1">
+                  {{ order.createdAt | date:'dd MMM yyyy' }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Products Preview -->
+            <div class="flex items-center gap-2">
+              @for (item of order.cartItems | slice:0:2; track item._id) {
+                <img
+                  [src]="item.product.imageCover"
+                  [alt]="item.product.title"
+                  class="w-11 h-11 rounded-lg object-contain border border-gray-100 p-1 bg-white"
+                />
+              }
+
+              <span class="text-xs text-gray-500 ml-1">
+                {{ getTotalItems(order) }} Items
+              </span>
+            </div>
+
+            <!-- Status -->
+            <div>
+              @if (order.isDelivered) {
+                <span class="inline-flex items-center gap-2 bg-green-50 text-green-700 px-3 py-2 rounded-full text-xs font-semibold">
+                  <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                  {{ 'Delivered' | translate }}
+                </span>
+              } @else {
+                <span class="inline-flex items-center gap-2 bg-amber-50 text-amber-700 px-3 py-2 rounded-full text-xs font-semibold">
+                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                  {{ 'Not Delivered' | translate }}
+                </span>
+              }
+            </div>
+
+            <!-- Price & Button -->
+            <div class="flex items-center justify-between md:justify-end gap-5">
+              <div>
+                <p class="text-xs text-gray-400 mb-1">{{ 'Total Amount' | translate }}</p>
+                <p class="font-bold text-gray-900">
+                  {{ order.totalOrderPrice | currency:'EGP ' }}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                (click)="openOrderDetails(order)"
+                class="px-4 py-2.5 rounded-xl border border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white text-sm font-semibold transition-all">
+                {{ 'View Details' | translate }}
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      } @empty {
+        <div class="bg-white border border-gray-200 rounded-2xl p-10 text-center">
+          <i class="fa-solid fa-box-open text-5xl text-gray-300 mb-4"></i>
+          <h3 class="text-xl font-bold text-gray-800">{{ 'No Orders Yet' | translate }}</h3>
+          <p class="text-gray-500 mt-2">
+            {{ 'You haven\'t placed any orders yet.' | translate }}
+          </p>
+          <a href="/products"
+            class="inline-block mt-5 bg-primary-600 text-white px-5 py-3 rounded-xl font-semibold">
+            {{ 'Start Shopping' | translate }}
+          </a>
+        </div>
+      }
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Order Details Popup -->
+@if (selectedOrder(); as order) {
+
+  <div
+    class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+    (click)="closeOrderDetails()">
+
+    <div
+      class="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl"
+      (click)="$event.stopPropagation()">
+
+      <!-- Popup Header -->
+      <div class="flex items-center justify-between p-5 border-b border-gray-100 sticky top-0 bg-white z-10">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900">{{ 'Order Details' | translate }}</h2>
+          <p class="text-sm text-gray-500 mt-1">
+            Order #{{ order.id }}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          (click)="closeOrderDetails()"
+          class="w-9 h-9 rounded-full bg-gray-100 hover:bg-red-50 hover:text-red-500 text-gray-600 transition-all">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-5 space-y-6">
+
+        <!-- Order Information -->
+        <div class="grid grid-cols-2 gap-4">
+
+          <div class="bg-gray-50 rounded-xl p-4">
+            <p class="text-xs text-gray-400 mb-2">{{ 'Order Date' | translate }}</p>
+            <p class="text-sm font-semibold text-gray-900">
+              {{ order.createdAt | date:'dd MMM yyyy, hh:mm a' }}
+            </p>
+          </div>
+
+          <div class="bg-gray-50 rounded-xl p-4">
+            <p class="text-xs text-gray-400 mb-2">{{ 'Order Status' | translate }}</p>
+
+            @if (order.isDelivered) {
+              <span class="text-sm font-semibold text-green-600">
+                {{ 'Delivered' | translate }}
+              </span>
+            } @else {
+              <span class="text-sm font-semibold text-amber-600">
+                {{ 'Not Delivered' | translate }}
+              </span>
+            }
+          </div>
+
+        </div>
+
+        <!-- Products -->
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-bold text-gray-900">{{ 'Ordered Products' | translate }}</h3>
+            <span class="text-xs text-gray-500">
+              {{ order.cartItems.length }} Products
+            </span>
+          </div>
+
+          <div class="space-y-4">
+
+            @for (item of order.cartItems; track item._id) {
+
+              <div class="flex items-center gap-3">
+
+                <img
+                  [src]="item.product.imageCover"
+                  [alt]="item.product.title"
+                  class="w-16 h-16 rounded-xl border border-gray-100 object-contain p-1 bg-white"
+                />
+
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-sm font-semibold text-gray-900">
+                    {{ item.product.title }}
+                  </h4>
+
+                  <p class="text-xs text-gray-500 mt-1">
+                    {{ item.product.brand.name }}
+                    · Qty: {{ item.count }}
+                  </p>
+
+                  <p class="text-xs text-gray-500 mt-1">
+                    {{ item.price | currency:'EGP ' }} / item
+                  </p>
+                </div>
+
+                <p class="text-sm font-bold text-gray-900 whitespace-nowrap">
+                  {{ item.price * item.count | currency:'EGP ' }}
+                </p>
+
+              </div>
+
+            }
+
+          </div>
+        </div>
+
+        <div class="border-t border-gray-100"></div>
+
+        <!-- Shipping Address -->
+        <div>
+          <h3 class="font-bold text-gray-900 mb-3">
+            {{ 'Shipping Address' | translate }}
+          </h3>
+
+          <div class="bg-gray-50 rounded-xl p-4 space-y-3 text-sm text-gray-600">
+
+            <p>
+              <i class="fa-solid fa-city w-5 text-gray-400"></i>
+              City: {{ order.shippingAddress.city || 'Not provided' }}
+            </p>
+
+            <p>
+              <i class="fa-solid fa-location-dot w-5 text-gray-400"></i>
+              Details: {{ order.shippingAddress.details || 'Not provided' }}
+            </p>
+
+            <p>
+              <i class="fa-solid fa-phone w-5 text-gray-400"></i>
+              Phone: {{ order.shippingAddress.phone || 'Not provided' }}
+            </p>
+
+          </div>
+        </div>
+
+        <!-- Payment Summary -->
+        <div>
+          <h3 class="font-bold text-gray-900 mb-3">
+            {{ 'Payment Summary' | translate }}
+          </h3>
+
+          <div class="bg-gray-50 rounded-xl p-4 space-y-3 text-sm">
+
+            <div class="flex justify-between text-gray-600">
+              <span>{{ 'Payment Method' | translate }}</span>
+              <span class="font-medium text-gray-900">
+                {{ order.paymentMethodType === 'card' ? 'Credit Card' : 'Cash' }}
+              </span>
+            </div>
+
+            <div class="flex justify-between text-gray-600">
+              <span>{{ 'Payment Status' | translate }}</span>
+
+              @if (order.isPaid) {
+                <span class="font-semibold text-green-600">{{ 'Paid' | translate }}</span>
+              } @else {
+                <span class="font-semibold text-amber-600">{{ 'Not Paid' | translate }}</span>
+              }
+            </div>
+
+            <div class="flex justify-between text-gray-600">
+              <span>{{ 'Tax' | translate }}</span>
+              <span>{{ order.taxPrice | currency:'EGP ' }}</span>
+            </div>
+
+            <div class="flex justify-between text-gray-600">
+              <span>{{ 'Shipping' | translate }}</span>
+              <span>
+                {{ order.shippingPrice === 0 ? 'Free' : (order.shippingPrice | currency:'EGP ') }}
+              </span>
+            </div>
+
+            <div class="border-t border-gray-200 pt-3 flex justify-between items-center">
+              <span class="font-bold text-gray-900">{{ 'Total' | translate }}</span>
+              <span class="text-lg font-extrabold text-primary-600">
+                {{ order.totalOrderPrice | currency:'EGP ' }}
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Popup Footer -->
+      <div class="p-5 border-t border-gray-100 flex justify-end">
+        <button
+          type="button"
+          (click)="closeOrderDetails()"
+          class="px-6 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-700 text-white font-semibold text-sm transition-all">
+          {{ 'Close' | translate }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+}

@@ -1,0 +1,153 @@
+<div
+  id="product-card"
+  class="group flex h-full flex-col overflow-hidden rounded-[20px] border border-gray-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-gray-900/10"
+>
+  <!-- Media -->
+  <div
+    class="relative h-[260px] shrink-0 overflow-hidden bg-gradient-to-b from-[#d9f7e4] via-[#86e0a8] to-[#3fbf75]"
+  >
+    <img
+      class="h-full w-full object-contain p-3.5 transition-transform duration-500 group-hover:scale-105"
+      [alt]="product().title"
+      [src]="product().imageCover"
+    />
+
+    @if (product().priceAfterDiscount) {
+      <div class="absolute bottom-3 left-3 -rotate-45">
+        <span class="rounded bg-red-500 px-2 py-1 text-xs text-white">
+          -{{
+            (((product().price - product().priceAfterDiscount!) / product().price) * 100).toFixed(
+              0
+            )
+          }}%
+        </span>
+      </div>
+    }
+
+    <span
+      class="absolute left-3.5 top-3.5 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold text-indigo-600 shadow-sm backdrop-blur"
+    >
+      {{ product().category.name | translate }}
+    </span>
+
+    <!-- Fixed side buttons -->
+    <div class="absolute right-3 top-3 flex flex-col gap-2">
+    
+
+  <button
+    type="button"
+    (click)="toggleWishlist(product()._id)"
+    [disabled]="wishlistLoading()"
+    class="grid size-10 cursor-pointer place-items-center rounded-full bg-white shadow-md transition-all duration-300 hover:scale-110 disabled:cursor-not-allowed"
+    [ngClass]="wishlistService.isInWishlist(product()._id)
+      ? 'text-red-500'
+      : 'text-gray-400 hover:text-red-500'"
+    [title]="wishlistService.isInWishlist(product()._id)
+      ? 'Remove from wishlist'
+      : 'Add to wishlist'"
+  >
+    <i
+      class="fa-heart text-lg"
+      [ngClass]="wishlistService.isInWishlist(product()._id)
+        ? 'fa-solid'
+        : 'fa-regular'"
+    ></i>
+  </button>
+
+ 
+
+      <button
+        class="grid size-9 place-items-center rounded-full bg-white text-gray-600 shadow-md transition-colors hover:text-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+        title="{{ 'Compare' | translate }}"
+        aria-label="{{ 'Compare' | translate }}"
+      >
+        <svg class="size-[17px]" width="17" height="17" viewBox="0 0 512 512" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M65.9 228.5c13.3-93 93.4-164.5 190.1-164.5 53 0 101 21.5 135.8 56.2 .2 .2 .4 .4 .6 .6l7.6 7.2-47.9 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l128 0c17.7 0 32-14.3 32-32l0-128c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 53.4-11.3-10.7C390.5 28.6 326.5 0 256 0 127 0 20.3 95.4 2.6 219.5 .1 237 12.2 253.2 29.7 255.7s33.7-9.7 36.2-27.1zm443.5 64c2.5-17.5-9.7-33.7-27.1-36.2s-33.7 9.7-36.2 27.1c-13.3 93-93.4 164.5-190.1 164.5-53 0-101-21.5-135.8-56.2-.2-.2-.4-.4-.6-.6l-7.6-7.2 47.9 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 320c-8.5 0-16.7 3.4-22.7 9.5S-.1 343.7 0 352.3l1 127c.1 17.7 14.6 31.9 32.3 31.7S65.2 496.4 65 478.7l-.4-51.5 10.7 10.1c46.3 46.1 110.2 74.7 180.7 74.7 129 0 235.7-95.4 253.4-219.5z"
+          />
+        </svg>
+      </button>
+      <a
+        class="grid size-9 place-items-center rounded-full bg-white text-gray-600 shadow-md transition-colors hover:text-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+        [routerLink]="['/product-details', product().id]"
+        title="{{ 'Quick view' | translate }}"
+        aria-label="{{ 'View product' | translate }}"
+      >
+        <svg class="size-[17px]" width="17" height="17" viewBox="0 0 576 512" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M288 80C222.8 80 169.2 109.6 128.1 147.7 89.6 183.5 63 226 49.4 256 63 286 89.6 328.5 128.1 364.3 169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256 513 226 486.4 183.5 447.9 147.7 406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1 3.3 7.9 3.3 16.7 0 24.6-14.9 35.7-46.2 87.7-93 131.1-47.1 43.7-111.8 80.6-192.6 80.6S142.5 443.2 95.4 399.4c-46.8-43.5-78.1-95.4-93-131.1-3.3-7.9-3.3-16.7 0-24.6 14.9-35.7 46.2-87.7 93-131.1zM288 336c44.2 0 80-35.8 80-80 0-29.6-16.1-55.5-40-69.3-1.4 59.7-49.6 107.9-109.3 109.3 13.8 23.9 39.7 40 69.3 40zm-79.6-88.4c2.5 .3 5 .4 7.6 .4 35.3 0 64-28.7 64-64 0-2.6-.2-5.1-.4-7.6-37.4 3.9-67.2 33.7-71.1 71.1zm45.6-115c10.8-3 22.2-4.5 33.9-4.5 8.8 0 17.5 .9 25.8 2.6 .3 .1 .5 .1 .8 .2 57.9 12.2 101.4 63.7 101.4 125.2 0 70.7-57.3 128-128 128-61.6 0-113-43.5-125.2-101.4-1.8-8.6-2.8-17.5-2.8-26.6 0-11 1.4-21.8 4-32 .2-.7 .3-1.3 .5-1.9 11.9-43.4 46.1-77.6 89.5-89.5z"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="flex flex-1 flex-col px-[18px] pb-[18px] pt-4">
+    <!-- Title: always reserves 2 lines -->
+    <h3 class="min-h-[2.75rem] text-[17px] font-semibold leading-snug">
+      <a class="line-clamp-2 transition-colors hover:text-indigo-600">{{ product().title }}</a>
+    </h3>
+
+    <!-- Rating: fixed row -->
+    <div class="mt-2 flex h-5 items-center gap-2">
+      <div class="flex items-center gap-1">
+        @for (star of [1, 2, 3, 4, 5]; track star) {
+          <i
+            class="text-yellow-400"
+            [ngClass]="
+              product().ratingsAverage >= star
+                ? 'fa-solid fa-star'
+                : product().ratingsAverage >= star - 0.5
+                  ? 'fa-solid fa-star-half-stroke'
+                  : 'fa-regular fa-star'
+            "
+          ></i>
+        }
+      </div>
+      <span class="text-xs text-gray-500">
+        {{ product().ratingsAverage }} ({{ product().ratingsQuantity }})
+      </span>
+    </div>
+
+    <!-- Price + add: pinned to the bottom, fixed height -->
+    <div
+      class="mt-auto flex h-[88px] items-end justify-between border-t border-dashed border-gray-200 pt-3.5"
+    >
+      <div class="flex flex-col justify-end">
+        <small class="mb-px block text-[11px] leading-4 text-gray-500">{{ 'Price' | translate }}</small>
+
+        <strong class="text-[22px] font-bold leading-7 tracking-tight">
+          @if (product().priceAfterDiscount) {
+            <span class="text-main">{{ product().priceAfterDiscount }} EGP</span>
+          } @else {
+            {{ product().price }} EGP
+          }
+        </strong>
+
+        <!-- Old price row: always takes space, even with no discount -->
+        <span class="block h-5 text-sm leading-5 text-gray-500 line-through">
+          @if (product().priceAfterDiscount) {
+            {{ product().price }} EGP
+          }
+        </span>
+      </div>
+
+      <button
+      (click)="addToCart(product()._id)"
+        class="inline-flex items-center gap-1.5 rounded-full bg-main px-[18px] py-[11px] text-sm font-semibold text-white shadow-lg shadow-indigo-600/30 transition hover:scale-[1.1] hover:bg-primary-700 hover:shadow-primary-600/40"
+      >
+        <svg class="size-3.5" width="14" height="14" viewBox="0 0 448 512" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"
+          />
+        </svg>
+        {{ 'Add' | translate }}
+      </button>
+    </div>
+  </div>
+  
+</div>

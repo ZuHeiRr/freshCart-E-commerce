@@ -1,0 +1,116 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'ngx-toastr/toastr'; 
+@import 'tailwindcss';
+
+@theme {
+  --color-main: #16a34a;
+  --color-primary-50: #f0fdf4;
+  --color-primary-100: #dcfce7;
+  --color-primary-200: #bbf7d0;
+  --color-primary-300: #86efac;
+  --color-primary-400: #4ade80;
+  --color-primary-500: #22c55e;
+  --color-primary-600: #16a34a;
+  --color-primary-700: #15803d;
+  --color-primary-800: #14532d;
+  --color-primary-900: #134e28;
+}
+@utility container {
+  margin: auto;
+}
+body {
+  font-family: 'Exo', 'Cairo', sans-serif;
+}
+
+html[dir='rtl'] body {
+  font-family: 'Cairo', 'Exo', sans-serif;
+}
+
+html[dir='rtl'] .text-left { text-align: right; }
+html[dir='rtl'] .text-right { text-align: left; }
+
+
+:root {
+  --main-color: #16a34a;
+  --color-primary-50: #f0fdf4;
+  --color-primary-100: #dcfce7;
+  --color-primary-200: #bbf7d0;
+  --color-primary-300: #86efac;
+  --color-primary-400: #4ade80;
+  --color-primary-500: #22c55e;
+  --color-primary-600: #16a34a;
+  --color-primary-700: #15803d;
+  --color-primary-800: #14532d;
+  --color-primary-900: #134e28;
+}
+
+.text-main {
+  color: var(--main-color);
+}
+.bg-main {
+  background-color: var(--main-color);
+}
+
+.mySwiper::part(button-prev),
+.mySwiper::part(button-next) {
+  color: var(--main-color);
+  background: white;
+  border-radius: 50%;
+  padding: 12px;
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 640px) {
+  .mySwiper::part(button-prev),
+  .mySwiper::part(button-next) {
+    display: none;
+  }
+}
+/* الحالة الافتراضية: المحتوى مخفي */
+.slide-content > * {
+  opacity: 0;
+  transform: translateY(25px);
+}
+
+/* لما السلايد يبقى Active */
+.swiper-slide-active .slide-content > * {
+  animation: fadeUp 0.7s ease forwards;
+}
+
+/* توقيت ظهور كل عنصر */
+.swiper-slide-active .slide-content > *:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.swiper-slide-active .slide-content > *:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.swiper-slide-active .slide-content > *:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.mySwiper::part(bullet-active) {
+  background-color: White;
+  border-radius: 5px;
+  opacity: 1;
+  width: 24px;
+}
+.mySwiper::part(bullet) {
+  background-color: gray;
+  opacity: 1;
+}

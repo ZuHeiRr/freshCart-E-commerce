@@ -1,0 +1,278 @@
+
+<section class="min-h-screen bg-gray-50 px-4 py-10">
+  <div class="mx-auto max-w-5xl">
+
+    <!-- Header -->
+    <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
+
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">
+          {{ 'My Addresses' | translate }}
+        </h1>
+
+        <p class="mt-2 text-sm text-gray-500">
+          {{ 'Manage your delivery addresses' | translate }}
+        </p>
+      </div>
+
+      <button
+        type="button"
+        (click)="showForm.set(!showForm())"
+        class="rounded-xl bg-primary-600 px-5 py-3 font-semibold text-white transition hover:bg-primary-700"
+      >
+        {{ (showForm() ? 'Cancel' : '+ Add New Address') | translate }}
+      </button>
+
+    </div>
+
+    <!-- Add Address Form -->
+    @if (showForm()) {
+
+      <div class="mb-8 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+
+        <h2 class="mb-6 text-xl font-bold text-gray-800">
+          {{ 'Add New Address' | translate }}
+        </h2>
+
+        <form
+          [formGroup]="addressForm"
+          (ngSubmit)="addAddress()"
+        >
+
+          <div class="grid gap-5 sm:grid-cols-2">
+
+            <!-- Name -->
+            <div>
+              <label class="mb-2 block text-sm font-medium text-gray-700">
+                {{ 'Address Name' | translate }}
+              </label>
+
+              <input
+                formControlName="name"
+                type="text"
+                placeholder="{{ 'Home' | translate }}"
+                class="w-full rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-primary-500"
+              />
+
+              @if (
+                addressForm.get('name')?.touched &&
+                addressForm.get('name')?.invalid
+              ) {
+                <p class="mt-1 text-xs text-red-500">
+                  {{ 'Name is required' | translate }}
+                </p>
+              }
+            </div>
+
+            <!-- City -->
+            <div>
+              <label class="mb-2 block text-sm font-medium text-gray-700">
+                {{ 'City' | translate }}
+              </label>
+
+              <input
+                formControlName="city"
+                type="text"
+                placeholder="Zagazig"
+                class="w-full rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-primary-500"
+              />
+
+              @if (
+                addressForm.get('city')?.touched &&
+                addressForm.get('city')?.invalid
+              ) {
+                <p class="mt-1 text-xs text-red-500">
+                  {{ 'City is required' | translate }}
+                </p>
+              }
+            </div>
+
+            <!-- Phone -->
+            <div>
+              <label class="mb-2 block text-sm font-medium text-gray-700">
+                {{ 'Phone Number' | translate }}
+              </label>
+
+              <input
+                formControlName="phone"
+                type="tel"
+                placeholder="01010700700"
+                class="w-full rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-primary-500"
+              />
+
+              @if (
+                addressForm.get('phone')?.touched &&
+                addressForm.get('phone')?.invalid
+              ) {
+                <p class="mt-1 text-xs text-red-500">
+                  {{ 'Enter a valid Egyptian phone number' | translate }}
+                </p>
+              }
+            </div>
+
+            <!-- Details -->
+            <div>
+              <label class="mb-2 block text-sm font-medium text-gray-700">
+                {{ 'Address Details' | translate }}
+              </label>
+
+              <input
+                formControlName="details"
+                type="text"
+                placeholder="Street, building, apartment..."
+                class="w-full rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-primary-500"
+              />
+
+              @if (
+                addressForm.get('details')?.touched &&
+                addressForm.get('details')?.invalid
+              ) {
+                <p class="mt-1 text-xs text-red-500">
+                  {{ 'Details are required' | translate }}
+                </p>
+              }
+            </div>
+
+          </div>
+
+          <button
+            type="submit"
+            [disabled]="submitting()"
+            class="mt-6 rounded-xl bg-primary-600 px-7 py-3 font-semibold text-white transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {{ submitting() ? 'Saving...' : 'Save Address' }}
+          </button>
+
+        </form>
+
+      </div>
+
+    }
+
+    <!-- Loading -->
+    @if (loading()) {
+
+      <div class="py-20 text-center">
+
+        <i class="fa-solid fa-spinner fa-spin text-3xl text-primary-600"></i>
+
+        <p class="mt-4 text-gray-500">
+          {{ 'Loading addresses...' | translate }}
+        </p>
+
+      </div>
+
+    }
+
+    @else {
+
+      <!-- Address List -->
+      @if (addressService.addresses().length > 0) {
+
+        <div class="grid gap-5 sm:grid-cols-2">
+
+          @for (
+            address of addressService.addresses();
+            track address._id
+          ) {
+
+            <div class="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition hover:shadow-md">
+
+              <!-- Card Header -->
+              <div class="mb-5 flex items-center justify-between">
+
+                <div class="flex items-center gap-3">
+
+                  <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
+                    <i class="fa-solid fa-location-dot"></i>
+                  </div>
+
+                  <div>
+                    <h3 class="font-bold text-gray-900">
+                      {{ address.name }}
+                    </h3>
+
+                    <p class="text-xs text-gray-400">
+                      {{ 'Delivery Address' | translate }}
+                    </p>
+                  </div>
+
+                </div>
+
+                <!-- Delete -->
+                <button
+                  type="button"
+                  (click)="deleteAddress(address._id)"
+                  [disabled]="deletingId() === address._id"
+                  class="flex h-9 w-9 items-center justify-center rounded-lg text-red-500 transition hover:bg-red-50 disabled:opacity-50"
+                >
+                  @if (deletingId() === address._id) {
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                  } @else {
+                    <i class="fa-solid fa-trash"></i>
+                  }
+                </button>
+
+              </div>
+
+              <!-- Card Details -->
+              <div class="space-y-3 text-sm text-gray-600">
+
+                <p>
+                  <i class="fa-solid fa-map-pin mr-2 text-gray-400"></i>
+                  {{ address.details }}
+                </p>
+
+                <p>
+                  <i class="fa-solid fa-city mr-2 text-gray-400"></i>
+                  {{ address.city }}
+                </p>
+
+                <p>
+                  <i class="fa-solid fa-phone mr-2 text-gray-400"></i>
+                  {{ address.phone }}
+                </p>
+
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      }
+
+      @else {
+
+        <!-- Empty State -->
+        <div class="rounded-2xl border border-gray-100 bg-white px-6 py-16 text-center shadow-sm">
+
+          <div class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-gray-100 text-gray-400">
+            <i class="fa-solid fa-location-dot text-3xl"></i>
+          </div>
+
+          <h2 class="text-xl font-bold text-gray-800">
+            {{ 'No Addresses Yet' | translate }}
+          </h2>
+
+          <p class="mx-auto mt-2 max-w-sm text-sm text-gray-500">
+            {{ 'You haven\'t added any delivery addresses. Add your first address to make checkout easier.' | translate }}
+          </p>
+
+          <button
+            type="button"
+            (click)="showForm.set(true)"
+            class="mt-6 rounded-xl bg-primary-600 px-6 py-3 font-semibold text-white transition hover:bg-primary-700"
+          >
+            {{ 'Add Your First Address' | translate }}
+          </button>
+
+        </div>
+
+      }
+
+    }
+
+  </div>
+</section>

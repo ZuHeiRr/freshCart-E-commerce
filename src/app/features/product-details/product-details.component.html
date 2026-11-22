@@ -1,0 +1,375 @@
+<!-- Breadcrumb -->
+<nav class="container mx-auto px-4 py-5">
+  <ol class="flex items-center flex-wrap gap-2 text-sm text-gray-500">
+    <li>
+      <a href="/" class="hover:text-primary-600 transition">
+        <i class="fa-solid fa-house"></i>
+        {{ 'Home' | translate }}
+      </a>
+    </li>
+    <li><i class="fa-solid fa-chevron-right text-xs"></i></li>
+    <li>
+      <a [routerLink]="['/categories', singleProduct()?.category?._id]" class="hover:text-primary-600 transition"> {{ singleProduct()?.category?.name | translate }} </a>
+    </li>
+    <li><i class="fa-solid fa-chevron-right text-xs"></i></li>
+    <li class="font-semibold text-gray-900">{{ singleProduct()?.title}}</li>
+  </ol>
+</nav>
+
+<!-- Product Details -->
+<section class="container mx-auto px-4 pb-16">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-14 items-center">
+    <!-- Product Gallery -->
+    <div class="space-y-4 shadow-2xl rounded-base bg-gray-100 p-4">
+      <!-- Main Image -->
+     
+
+<div
+  class="relative bg-gray-50 rounded-3xl border border-gray-100 overflow-hidden p-6 sm:p-10"
+>
+  <span
+    class="absolute top-5 left-5 z-20 bg-primary-600 text-white text-xs font-bold px-4 py-2 rounded-full"
+  >
+    {{ 'Featured Product' | translate }}
+  </span>
+
+  <button
+    type="button"
+    class="absolute top-5 right-5 z-20 w-11 h-11 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-500 hover:text-red-500 hover:scale-110 transition"
+  >
+    <i class="fa-regular fa-heart text-lg"></i>
+  </button>
+
+  <div class="relative overflow-hidden h-[350px] sm:h-[480px]">
+    @if (previousImage()) {
+      <img
+        [src]="previousImage()!"
+        alt="Previous Product Image"
+        class="absolute inset-0 w-full h-full object-contain"
+        [class.slide-out-next]="slideDirection() === 'next'"
+        [class.slide-out-prev]="slideDirection() === 'prev'"
+      />
+    }
+
+    <img
+      [src]="mainImage() || singleProduct()?.imageCover"
+      alt="Product Image"
+      class="absolute inset-0 w-full h-full object-contain"
+      [class.slide-in-next]="previousImage() && slideDirection() === 'next'"
+      [class.slide-in-prev]="previousImage() && slideDirection() === 'prev'"
+    />
+  </div>
+
+  <div
+    class="absolute bottom-5 right-5 text-xs text-gray-400 flex items-center gap-2"
+  >
+    <i class="fa-solid fa-magnifying-glass-plus"></i>
+    {{ 'Product Preview' | translate }}
+  </div>
+</div>
+
+<!-- Thumbnails -->
+<div class="grid grid-cols-4 gap-3">
+  @for (item of singleProduct()?.images; track $index) {
+    <button
+      type="button"
+      (click)="changeMainImg(item)"
+      [class.border-2]="mainImage() === item"
+      [class.border-primary-600]="mainImage() === item"
+      [class.border]="mainImage() !== item"
+      [class.border-gray-200]="mainImage() !== item"
+      class="rounded-2xl bg-gray-50 p-2 overflow-hidden hover:border-primary-600 transition"
+    >
+      <img
+        [src]="item"
+        class="w-full h-24 object-contain"
+        alt="Product image"
+      />
+    </button>
+  }
+</div>
+
+    </div>
+
+    <!-- Product Information -->
+    <div class="flex flex-col">
+      <!-- Category & Brand -->
+      <div class="flex items-center gap-3 mb-5">
+        <span class="bg-primary-50 text-primary-700 text-xs font-semibold px-4 py-2 rounded-full">
+          {{ singleProduct()?.category?.name | translate }}
+        </span>
+
+        <span class="text-sm text-gray-500">
+          {{ 'Brand:' | translate }}
+          <span class="font-semibold text-gray-800">{{ singleProduct()?.brand?.name }}</span>
+        </span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-4">{{ singleProduct()?.title }}</h1>
+
+      <!-- Rating -->
+      <div class="flex items-center flex-wrap gap-3 mb-6">
+       <div class="flex items-center gap-1 text-yellow-400">
+  @for (star of [1, 2, 3, 4, 5]; track star) {
+    @if (singleProduct()?.ratingsAverage! >= star) {
+      <i class="fa-solid fa-star"></i>
+    } @else if (singleProduct()?.ratingsAverage! >= star - 0.5) {
+      <i class="fa-solid fa-star-half-stroke"></i>
+    } @else {
+      <i class="fa-regular fa-star"></i>
+    }
+  }
+</div>
+
+        <span class="text-sm font-semibold text-gray-800">{{ singleProduct()?.ratingsAverage}}</span>
+
+        <span class="text-sm text-gray-400">({{ singleProduct()?.ratingsQuantity}} Reviews)</span>
+
+        <span class="text-gray-300">|</span>
+
+        <span class="text-sm text-green-600 font-medium">
+          <i class="fa-solid fa-circle-check mr-1"></i>
+          {{ 'Verified Product' | translate }}
+        </span>
+      </div>
+
+      <div class="border-t border-gray-100 mb-6"></div>
+
+      <!-- Price -->
+      <div class="mb-6">
+        <p class="text-sm text-gray-500 mb-2">{{ 'Price' | translate }}</p>
+
+        <div class="flex items-center gap-3 flex-wrap">
+          <span class="text-4xl font-bold text-primary-600"> {{ singleProduct()?.price }} EGP </span>
+        </div>
+
+        <p class="text-sm text-gray-400 mt-2">{{ 'Inclusive of all taxes' | translate }}</p>
+      </div>
+
+      <!-- Stock Status -->
+      <div
+        class="flex items-center justify-between bg-green-50 border border-green-100 rounded-2xl p-4 mb-6"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-xl bg-green-100 text-green-600 flex items-center justify-center"
+          >
+            <i class="fa-solid fa-box-open"></i>
+          </div>
+
+          <div>
+            <p class="text-sm font-bold text-green-800">{{ 'In Stock' | translate }}</p>
+            <p class="text-xs text-green-600">{{ 'Ready to ship' | translate }}</p>
+          </div>
+        </div>
+
+        <span class="text-sm font-semibold text-green-700"> {{ singleProduct()?.quantity }} Available </span>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-7">
+        <h3 class="font-bold text-gray-900 mb-3">{{ 'Product Description' | translate }}</h3>
+
+        <p class="text-gray-500 leading-7 text-sm">
+          {{ 'Material: Polyester Blend. Colour Name: Multicolour. Department: Women.' | translate }}
+        </p>
+      </div>
+
+      <!-- Quantity -->
+      <div class="mb-6">
+        <label class="block text-sm font-bold text-gray-900 mb-3"> {{ 'Quantity' | translate }} </label>
+
+        <div class="flex items-center gap-4">
+          <div class="flex items-center border border-gray-200 rounded-xl overflow-hidden bg-white">
+            <button
+              class="w-11 h-11 text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition"
+            >
+              <i class="fa-solid fa-minus"></i>
+            </button>
+
+            <input
+              type="number"
+              value="1"
+              min="1"
+              max="220"
+              class="w-14 h-11 text-center font-bold text-gray-900 outline-none border-x border-gray-200"
+            />
+
+            <button
+              class="w-11 h-11 text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition"
+            >
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+
+          <span class="text-xs text-gray-400"> Maximum {{ singleProduct()?.quantity }} items </span>
+        </div>
+      </div>
+
+      <!-- Total -->
+      <div class="bg-primary-50/70 border border-primary-100 rounded-2xl p-5 mb-6">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-sm text-gray-500 mb-1">{{ 'Total Amount' | translate }}</p>
+
+            <p class="text-xs text-gray-400">{{ 'Including selected quantity' | translate }}</p>
+          </div>
+
+          <span class="text-2xl font-bold text-primary-600"> {{ singleProduct()?.price }}.00 EGP </span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+        <button
+        (click)="addToCart(singleProduct()?._id!)"
+          id="add-to-cart"
+          class="flex items-center justify-center gap-3 bg-primary-600 text-white rounded-xl py-4 px-5 font-bold shadow-lg shadow-primary-600/20 hover:bg-primary-700 hover:-translate-y-0.5 transition-all duration-300"
+        >
+          <i class="fa-solid fa-cart-shopping text-lg"></i>
+          {{ 'Add To Cart' | translate }}
+        </button>
+
+        <button
+          id="buy-now"
+          class="flex items-center justify-center gap-3 bg-gray-900 text-white rounded-xl py-4 px-5 font-bold hover:bg-gray-800 transition-all hover:-translate-y-0.5"
+        >
+          <i class="fa-solid fa-bolt text-lg"></i>
+          {{ 'Buy Now' | translate }}
+        </button>
+      </div>
+
+      <!-- Wishlist & Share -->
+      <div class="flex gap-3 mb-8">
+        <button
+          id="wishlist-button"
+          class="flex-1 flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 text-gray-600 font-semibold hover:text-red-500 hover:border-red-200 hover:bg-red-50 transition"
+        >
+          <i class="fa-regular fa-heart"></i>
+          {{ 'Add To Wishlist' | translate }}
+        </button>
+
+        <button
+          class="w-12 h-12 border border-gray-200 rounded-xl text-gray-600 hover:text-primary-600 hover:border-primary-300 transition"
+        >
+          <i class="fa-solid fa-share-nodes"></i>
+        </button>
+      </div>
+
+      <!-- Benefits -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-gray-100 pt-6">
+        <div class="flex items-center gap-3">
+          <div
+            class="w-11 h-11 shrink-0 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center"
+          >
+            <i class="fa-solid fa-truck-fast text-lg"></i>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-bold text-gray-900">{{ 'Free Delivery' | translate }}</h4>
+            <p class="text-xs text-gray-400">{{ 'Orders over $50' | translate }}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div
+            class="w-11 h-11 shrink-0 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center"
+          >
+            <i class="fa-solid fa-arrow-rotate-left text-lg"></i>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-bold text-gray-900">{{ '30 Days Return' | translate }}</h4>
+            <p class="text-xs text-gray-400">{{ 'Money back' | translate }}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div
+            class="w-11 h-11 shrink-0 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center"
+          >
+            <i class="fa-solid fa-shield-halved text-lg"></i>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-bold text-gray-900">{{ 'Secure Payment' | translate }}</h4>
+            <p class="text-xs text-gray-400">{{ '100% Protected' | translate }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="product-details-tabs" class="py-8">
+  <div class="container mx-auto px-4">
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+      <div class="border-b border-gray-200">
+        <div class="flex overflow-x-auto scrollbar-hide">
+          <button
+            type="button"
+            routerLink="product-details-tab"
+                        routerLinkActive="text-primary-600 border-b-2 border-primary-600 bg-primary-50/50"
+
+            class="flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap transition-all duration-200 text-gray-600 hover:text-primary-600 hover:bg-gray-50"
+          >
+            <svg
+              data-prefix="fas"
+              data-icon="box"
+              class="svg-inline--fa fa-box text-sm"
+              role="img"
+              viewBox="0 0 448 512"
+              aria-hidden="true"
+            >
+              <path
+                fill="currentColor"
+                d="M369.4 128l-34.3-48-222.1 0-34.3 48 290.7 0zM0 148.5c0-13.3 4.2-26.3 11.9-37.2L60.9 42.8C72.9 26 92.3 16 112.9 16l222.1 0c20.7 0 40.1 10 52.1 26.8l48.9 68.5c7.8 10.9 11.9 23.9 11.9 37.2L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 148.5z"
+              ></path></svg
+            >{{ 'Product Details' | translate }}</button
+          ><button
+            type="button"
+            routerLink="reviews"
+                        routerLinkActive="text-primary-600 border-b-2 border-primary-600 bg-primary-50/50"
+
+            class="flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap transition-all duration-200 text-gray-600 hover:text-primary-600 hover:bg-gray-50"
+          >
+            <svg
+              data-prefix="fas"
+              data-icon="star"
+              class="svg-inline--fa fa-star text-sm"
+              role="img"
+              viewBox="0 0 576 512"
+              aria-hidden="true"
+            >
+              <path
+                fill="currentColor"
+                d="M309.5-18.9c-4.1-8-12.4-13.1-21.4-13.1s-17.3 5.1-21.4 13.1L193.1 125.3 33.2 150.7c-8.9 1.4-16.3 7.7-19.1 16.3s-.5 18 5.8 24.4l114.4 114.5-25.2 159.9c-1.4 8.9 2.3 17.9 9.6 23.2s16.9 6.1 25 2L288.1 417.6 432.4 491c8 4.1 17.7 3.3 25-2s11-14.2 9.6-23.2L441.7 305.9 556.1 191.4c6.4-6.4 8.6-15.8 5.8-24.4s-10.1-14.9-19.1-16.3L383 125.3 309.5-18.9z"
+              ></path></svg
+            >{{ 'Reviews (54)' | translate }}</button
+          ><button
+            type="button"
+            routerLink="shipping-return"
+            routerLinkActive="text-primary-600 border-b-2 border-primary-600 bg-primary-50/50"
+            
+            class="flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap transition-all duration-200 text-gray-600 "
+          >
+            <svg
+              data-prefix="fas"
+              data-icon="truck"
+              class="svg-inline--fa fa-truck text-sm"
+              role="img"
+              viewBox="0 0 576 512"
+              aria-hidden="true"
+            >
+              <path
+                fill="currentColor"
+                d="M0 96C0 60.7 28.7 32 64 32l288 0c35.3 0 64 28.7 64 64l0 32 50.7 0c17 0 33.3 6.7 45.3 18.7L557.3 192c12 12 18.7 28.3 18.7 45.3L576 384c0 35.3-28.7 64-64 64l-3.3 0c-10.4 36.9-44.4 64-84.7 64s-74.2-27.1-84.7-64l-102.6 0c-10.4 36.9-44.4 64-84.7 64s-74.2-27.1-84.7-64L64 448c-35.3 0-64-28.7-64-64L0 96zM512 288l0-50.7-45.3-45.3-50.7 0 0 96 96 0zM192 424a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm232 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"
+              ></path></svg
+            >{{ 'Shipping &amp; Returns' | translate }}
+          </button>
+        </div>
+      </div>
+      <div><router-outlet></router-outlet></div>
+    </div>
+  </div>
+</section>

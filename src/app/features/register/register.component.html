@@ -1,0 +1,315 @@
+<main class="min-h-screen bg-gray-50 py-8 sm:py-12">
+  <div class="container max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <!-- Welcome Section -->
+      <section
+        class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-700 via-primary-600 to-primary-500 text-white p-7 sm:p-10 lg:p-12 flex flex-col justify-between"
+      >
+        <div class="absolute -top-24 -right-24 size-80 rounded-full bg-white/10 blur-3xl"></div>
+        <div class="absolute -bottom-20 -left-20 size-72 rounded-full bg-black/10 blur-3xl"></div>
+
+        <div class="relative z-10">
+          <div
+            class="inline-flex items-center gap-2 bg-white/15 border border-white/20 rounded-full px-4 py-2 text-sm mb-8"
+          >
+            <i class="fa-solid fa-leaf"></i>
+            {{ 'FreshCart Community' | translate }}
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl xl:text-5xl font-extrabold leading-tight">
+            {{ 'Welcome to' | translate }}
+            <span class="block mt-2">FreshCart</span>
+          </h1>
+
+          <p class="text-white/80 text-base sm:text-lg leading-relaxed mt-5 max-w-lg">
+            Join thousands of happy customers who enjoy fresh groceries delivered right to their
+            doorstep.
+          </p>
+
+          <div class="space-y-7 mt-10">
+            <div class="flex items-start gap-4">
+              <div
+                class="size-12 shrink-0 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center"
+              >
+                <i class="fa-solid fa-star text-xl"></i>
+              </div>
+              <div>
+                <h2 class="font-bold text-lg">{{ 'Premium Quality' | translate }}</h2>
+                <p class="text-white/75 text-sm mt-1">
+                  {{ 'Premium quality products sourced from trusted suppliers.' | translate }}
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div
+                class="size-12 shrink-0 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center"
+              >
+                <i class="fa-solid fa-truck-fast text-xl"></i>
+              </div>
+              <div>
+                <h2 class="font-bold text-lg">{{ 'Fast Delivery' | translate }}</h2>
+                <p class="text-white/75 text-sm mt-1">{{ 'Same-day delivery available in most areas.' | translate }}</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div
+                class="size-12 shrink-0 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center"
+              >
+                <i class="fa-solid fa-shield-halved text-xl"></i>
+              </div>
+              <div>
+                <h2 class="font-bold text-lg">{{ 'Secure Shopping' | translate }}</h2>
+                <p class="text-white/75 text-sm mt-1">
+                  {{ 'Your data and payments are completely secure.' | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="relative z-10 mt-12 bg-white/10 border border-white/20 backdrop-blur-md rounded-2xl p-5"
+        >
+          <div class="flex items-center gap-3 mb-4">
+            <div class="size-12 rounded-full bg-white/20 flex items-center justify-center">
+              <i class="fa-solid fa-user text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold">{{ 'Join our community' | translate }}</h3>
+              <div class="flex gap-1 text-yellow-300 text-xs mt-1">
+                @for (star of [1, 2, 3, 4, 5]; track star) {
+                  <i class="fa-solid fa-star"></i>
+                }
+              </div>
+            </div>
+          </div>
+          <p class="text-white/85 text-sm leading-relaxed italic">
+            {{ 'Enjoy a fresh and easy shopping experience with FreshCart.' | translate }}
+          </p>
+        </div>
+      </section>
+
+      <!-- Register Form -->
+      <section
+        class="bg-white rounded-3xl border border-gray-100 shadow-xl shadow-gray-200/50 p-6 sm:p-8 lg:p-10"
+      >
+        <div class="mb-8">
+          <div
+            class="size-14 rounded-2xl bg-primary-50 text-primary-600 flex items-center justify-center mb-5"
+          >
+            <i class="fa-solid fa-user-plus text-2xl"></i>
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">{{ 'Create Your Account' | translate }}</h2>
+          <p class="text-gray-500 mt-2">{{ 'Start your fresh journey with us today.' | translate }}</p>
+        </div>
+
+        <!-- API Error -->
+        @if (errorMessage()) {
+          <div
+            class="mb-5 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700"
+          >
+            <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+            <p class="text-sm">{{ errorMessage() }}</p>
+          </div>
+        }
+
+        <!-- Success Message -->
+        @if (successMsg()) {
+          <div
+            class="mb-5 flex items-start gap-3 rounded-xl border border-green-200 bg-green-50 p-4 text-green-700"
+          >
+            <i class="fa-solid fa-circle-check mt-0.5"></i>
+            <p class="text-sm">{{ successMsg() }}</p>
+          </div>
+        }
+
+        <!-- Social Buttons -->
+        <div class="flex flex-col sm:flex-row gap-3 mb-7">
+          <button
+            type="button"
+            class="flex-1 border border-gray-200 hover:bg-gray-50 rounded-xl py-3 flex justify-center items-center transition"
+          >
+            <i class="fa-brands fa-google me-2 text-red-600"></i>
+            {{ 'Google' | translate }}
+          </button>
+
+          <button
+            type="button"
+            class="flex-1 border border-gray-200 hover:bg-gray-50 rounded-xl py-3 flex justify-center items-center transition"
+          >
+            <i class="fa-brands fa-facebook me-2 text-blue-600"></i>
+            {{ 'Facebook' | translate }}
+          </button>
+        </div>
+
+        <div class="relative flex items-center my-7">
+          <div class="grow border-t border-gray-200"></div>
+          <span class="px-4 text-sm text-gray-400 bg-white">{{ 'OR' | translate }}</span>
+          <div class="grow border-t border-gray-200"></div>
+        </div>
+
+        <!-- Form -->
+        <form [formGroup]="registerForm" (ngSubmit)="submitRegister()" class="space-y-5" novalidate>
+          <!-- Name -->
+          <div class="flex flex-col gap-2">
+            <label for="name" class="text-sm font-semibold text-gray-700"> {{ 'Full Name *' | translate }} </label>
+
+            <input
+              id="name"
+              type="text"
+              formControlName="name"
+              placeholder="Enter your name"
+              class="form-control w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition"
+              [class.border-red-500]="name?.invalid && name?.touched"
+            />
+
+            @if (name?.touched && name?.hasError('required')) {
+              <p class="text-xs text-red-500">Name is required.</p>
+            }
+
+            @if (name?.touched && name?.hasError('minlength')) {
+              <p class="text-xs text-red-500">{{ 'Name must be at least 3 characters.' | translate }}</p>
+            }
+
+            @if (name?.touched && name?.hasError('maxlength')) {
+              <p class="text-xs text-red-500">{{ 'Name cannot exceed 20 characters.' | translate }}</p>
+            }
+          </div>
+
+          <!-- Email -->
+          <div class="flex flex-col gap-2">
+            <label for="email" class="text-sm font-semibold text-gray-700"> {{ 'Email Address *' | translate }} </label>
+
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="example@email.com"
+              autocomplete="email"
+              class="form-control w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition"
+              [class.border-red-500]="email?.invalid && email?.touched"
+            />
+
+            @if (email?.touched && email?.hasError('required')) {
+              <p class="text-xs text-red-500">{{ 'Email is required.' | translate }}</p>
+            }
+
+            @if (email?.touched && email?.hasError('email')) {
+              <p class="text-xs text-red-500">{{ 'Please enter a valid email address.' | translate }}</p>
+            }
+          </div>
+          <!-- phone -->
+          <div class="flex flex-col gap-2">
+            <label for="phone" class="text-sm font-semibold text-gray-700"> {{ 'Phone Number *' | translate }} </label>
+
+            <input
+              type="tel"
+              formControlName="phone"
+              placeholder="01XXXXXXXXX"
+              maxlength="11"
+              class="form-control w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition"
+            />
+
+            @if (phone?.hasError('required') && phone?.touched) {
+              <p class="text-red-500 text-sm mt-1">{{ 'Phone number is required' | translate }}</p>
+            }
+
+            @if (phone?.hasError('pattern') && phone?.touched) {
+              <p class="text-red-500 text-sm mt-1">
+                {{ 'Enter a valid Egyptian phone number (010, 011, 012, 015)' | translate }}
+              </p>
+            }
+          </div>
+
+          <!-- Password -->
+          <div class="flex flex-col gap-2">
+            <label for="password" class="text-sm font-semibold text-gray-700"> {{ 'Password *' | translate }} </label>
+
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              placeholder="Create a strong password"
+              autocomplete="new-password"
+              class="form-control w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition"
+              [class.border-red-500]="password?.invalid && password?.touched"
+            />
+
+            @if (password?.touched && password?.hasError('required')) {
+              <p class="text-xs text-red-500">{{ 'Password is required.' | translate }}</p>
+            }
+
+            @if (password?.touched && password?.hasError('pattern')) {
+              <p class="text-xs text-red-500 leading-relaxed">
+                Password must contain at least 8 characters, one uppercase letter, one number, and
+                one special character (@$!%*?&).
+              </p>
+            }
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="flex flex-col gap-2">
+            <label for="rePassword" class="text-sm font-semibold text-gray-700">
+              {{ 'Confirm Password *' | translate }}
+            </label>
+
+            <input
+              id="rePassword"
+              type="password"
+              formControlName="rePassword"
+              placeholder="Confirm your password"
+              autocomplete="new-password"
+              class="form-control w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition"
+              [class.border-red-500]="
+                (rePassword?.invalid && rePassword?.touched) ||
+                (registerForm.hasError('confirmPassword') && rePassword?.touched)
+              "
+            />
+
+            @if (rePassword?.touched && rePassword?.hasError('required')) {
+              <p class="text-xs text-red-500">{{ 'Please confirm your password.' | translate }}</p>
+            }
+
+            @if (
+              rePassword?.touched &&
+              !rePassword?.hasError('required') &&
+              registerForm.hasError('confirmPassword')
+            ) {
+              <p class="text-xs text-red-500">{{ 'Passwords do not match.' | translate }}</p>
+            }
+          </div>
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            [disabled]="isLoading()"
+            class="w-full bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-600/20 disabled:opacity-60 disabled:cursor-not-allowed rounded-xl py-3.5 font-semibold transition-all duration-300"
+          >
+            @if (isLoading()) {
+              <i class="fa-solid fa-spinner fa-spin me-2"></i>
+              {{ 'Creating Account...' | translate }}
+            } @else {
+              <i class="fa-solid fa-user-plus me-2"></i>
+              {{ 'Create My Account' | translate }}
+            }
+          </button>
+        </form>
+
+        <!-- Login -->
+        <p class="border-t border-gray-100 mt-8 pt-6 text-center text-sm text-gray-500">
+          {{ 'Already have an account?' | translate }}
+
+          <a
+            routerLink="/auth/login"
+            class="text-primary-600 hover:text-primary-700 hover:underline font-bold ms-1"
+          >
+            {{ 'Sign In' | translate }}
+          </a>
+        </p>
+      </section>
+    </div>
+  </div>
+</main>
