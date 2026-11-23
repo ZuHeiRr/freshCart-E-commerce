@@ -68,7 +68,7 @@ export const routes: Routes = [
     title: 'freshCart - Register',
   },
   {
-    path: 'allOrders',canActivate:[authGuard],
+    path: 'allorders',canActivate:[authGuard],
     loadComponent: () =>
       import('./features/all-orders/all-orders.component').then((m) => m.AllOrdersComponent),
     title: 'freshCart - AllOrders',
