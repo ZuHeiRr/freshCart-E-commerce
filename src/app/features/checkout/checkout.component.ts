@@ -71,7 +71,7 @@ export class CheckoutComponent implements OnInit {
     };
     this.cartService.creatrCashOrder(this.cartData()._id, payLoad).subscribe({
       next: (res) => {
-        this.router.navigate(['/allOrders'])
+        this.router.navigate(['/allorders'])
       },
       error: (err) => {
         console.log(err);
@@ -86,6 +86,8 @@ export class CheckoutComponent implements OnInit {
     };
     this.cartService.creatrVisaOrder(this.cartData()._id, payLoad).subscribe({
       next: (res) => {
+        console.log(res);
+        
         window.open(res.session.url, '_blank');
       },
       error: (err) => {
