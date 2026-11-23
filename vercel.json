@@ -1,6 +1,6 @@
 
 {
-  "outputDirectory": "dist/e-commerce",
+  "outputDirectory": "dist/e-commerce/browser",
   "rewrites": [
     {
       "source": "/(.*)",
