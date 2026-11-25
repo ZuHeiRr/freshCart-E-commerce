@@ -89,6 +89,7 @@ export class CheckoutComponent implements OnInit {
         console.log(res);
         
         window.open(res.session.url, '_blank');
+        this.cartService.cartCounter.set(0)
       },
       error: (err) => {
         console.log(err);

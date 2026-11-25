@@ -169,8 +169,7 @@
 
               <!-- Checkout -->
               <div class="space-y-3 pt-2">
-              
-                  <a
+                @if (islogged()) {  <a
                     class="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white py-4 px-6 rounded-xl font-semibold hover:from-primary-700 hover:to-primary-800 transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary-600/20 active:scale-[0.98]"
                     routerLink="/checkout"
                     ><svg
@@ -186,9 +185,8 @@
                         d="M128 96l0 64 128 0 0-64c0-35.3-28.7-64-64-64s-64 28.7-64 64zM64 160l0-64C64 25.3 121.3-32 192-32S320 25.3 320 96l0 64c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64z"
                       ></path></svg
                     ><span>{{ 'Secure Checkout' | translate }}</span></a
-                  >
-                
-                  <a
+                  >}@else {
+                      <a
                     routerLink="/login"
                     class="w-full flex items-center justify-center gap-2 bg-primary-600 text-white py-3.5 rounded-xl font-semibold hover:bg-primary-700 hover:shadow-lg hover:shadow-primary-600/20 transition-all duration-300"
                   >
@@ -203,6 +201,11 @@
                     {{ 'Create one' | translate }}
                   </a>
                 </p>
+                  }
+              
+                
+                
+                
               </div>
 
               <!-- Benefits -->

@@ -1,9 +1,10 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, inject, OnInit, signal, WritableSignal, PLATFORM_ID } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal, PLATFORM_ID, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../core/services/cart/cart.service';
 import { Icart } from '../../core/models/icart.interface';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
+import { AuthServiceService } from '../../core/auth/services/authService/auth-service.service';
 
 @Component({
   selector: 'app-cart',
@@ -13,9 +14,10 @@ import { TranslatePipe } from '../../core/i18n/translate.pipe';
 })
 export class CartComponent implements OnInit {
   private readonly cartService=inject(CartService)
+  private readonly authService=inject(AuthServiceService)
   private readonly platformId=inject(PLATFORM_ID)
 cartData : WritableSignal<Icart>=signal({} as Icart)
-
+  islogged=computed(()=>this.authService.islogged())
   ngOnInit(): void {
     this.getLoggedUserCart()
     
